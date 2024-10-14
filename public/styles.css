@@ -1,0 +1,108 @@
+body {
+    font-family: 'Arial', sans-serif; /* Ensure consistent font */
+    background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460, #e94560, #f9f9f9); /* Multicolor galaxy background */
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite; /* Animation for gradient */
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.container {
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.2); /* Transparent effect for the form */
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    max-width: 800px;
+    margin: 50px auto; /* Centered with margin */
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+.input-box {
+    margin-bottom: 15px; /* Space between input boxes */
+}
+
+input[type="number"],
+select {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.3); /* Glass-like transparent background */
+    color: black;
+    font-size: 16px;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -moz-appearance: none; /* Remove increment/decrement arrows */
+    appearance: none; /* Remove increment/decrement arrows */
+}
+
+button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: #5b5bff; /* Button color */
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #4a4acf; /* Darker shade on hover */
+}
+
+.table-container {
+    overflow-x: auto; /* Allow horizontal scrolling on small screens */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border-radius: 10px; /* Rounded corners for the table */
+    overflow: hidden; /* To ensure the rounded corners work */
+}
+
+th, td {
+    padding: 10px;
+    border: 0.5px solid rgba(255, 255, 255, 0.5);
+    text-align: center;
+}
+
+th {
+    background: rgba(255, 255, 255, 0.3); /* Slightly transparent header */
+}
+
+/* Navigation styles */
+nav {
+    text-align: center;
+    margin: 20px 0;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 18px;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}

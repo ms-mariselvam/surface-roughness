@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460, #e94560, #f9f9f9);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            color: white;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Full viewport height */
+            opacity: 0; /* Start hidden for animation */
+            transition: opacity 1s ease; /* Fade effect */
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .login-container {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            max-width: 400px;
+            width: 100%; /* Responsive */
+            text-align: center;
+            transform: translateY(50px); /* Start below the view */
+            opacity: 0; /* Start hidden for animation */
+            transition: transform 0.5s ease, opacity 0.5s ease; /* Slide in and fade */
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0;
+            color: white;
+            opacity: 0.7; /* Transparent look */
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.3);
+            color: black;
+            margin: 10px 0;
+        }
+
+        button {
+            width: 100%; /* Full width */
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: #5b5bff;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background 0.3s ease;
+            margin: 10px 0; /* Margin for spacing */
+        }
+
+        button:hover {
+            background: #4a4acf;
+        }
+
+        /* Loading spinner styles */
+        .loader {
+            display: none; /* Hidden by default */
+            border: 4px solid rgba(255, 255, 255, 0.3); /* Light border */
+            border-top: 4px solid white; /* White top */
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite; /* Spin effect */
+            margin: 20px auto; /* Center the spinner */
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Error message styles */
+        .error {
+            color: #ff4d4d;
+            margin: 10px 0;
+            display: none; /* Hidden by default */
+        }
+
+        /* Animation trigger classes */
+        .fade-in {
+            opacity: 1; /* Fade in */
+        }
+
+        .slide-in {
+            transform: translateY(0); /* Slide in */
+            opacity: 1; /* Fade in */
+        }
+
+        .toggle-password {
+            cursor: pointer;
+            color: white;
+            margin-left: 10px;
+        }
+
+        /* Remember me styles */
+        .remember-me {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px 0;
+        }
+
+        .remember-me input {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Admin Login</h1>
+        <form id="login-form" onsubmit="return validateLogin(event)">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Password:</label>
+            <div style="display: flex; align-items: center;">
+                <input type="password" id="password" name="password" required>
+                <span class="toggle-password" onclick="togglePassword()">👁️</span>
+            </div>
+
+            <div class="remember-me">
+                <input type="checkbox" id="remember-me" name="remember-me">
+                <label for="remember-me">Remember Me</label>
+            </div>
+
+            <button type="submit">Login</button>
+        </form>
+        
+        <div class="loader" id="loader"></div> <!-- Loading spinner -->
+        <div class="error" id="error-message">Invalid username or password!</div> <!-- Error message -->
+    </div>
+
+    <script>
+        // Function to toggle password visibility
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const passwordToggle = document.querySelector('.toggle-password');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                passwordToggle.textContent = '🙈'; // Change icon to indicate visibility
+            } else {
+                passwordInput.type = 'password';
+                passwordToggle.textContent = '👁️'; // Change icon back to hidden
+            }
+        }
+
+        // Function to validate login and handle loading animation
+        function validateLogin(event) {
+            event.preventDefault(); // Prevent form submission
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const loader = document.getElementById('loader');
+            const errorMessage = document.getElementById('error-message');
+
+            // Show the loader
+            loader.style.display = 'block';
+            errorMessage.style.display = 'none'; // Hide error message
+
+            // Simulate a delay for loading effect
+            setTimeout(() => {
+                // Check credentials
+                if (username === 'psgtech' && password === 'admin') {
+                    // Redirect to the admin page after successful login
+                    window.location.href = "admin-dashboard.html"; // Change to your admin dashboard page
+                } else {
+                    errorMessage.style.display = 'block'; // Show error message
+                    // Hide the loader
+                    loader.style.display = 'none'; 
+                }
+            }, 1500); // Simulate a 1.5 seconds delay for the loading effect
+        }
+
+        // Function to trigger the opening animation
+        window.onload = () => {
+            document.body.style.opacity = '1'; // Fade in body
+            const loginContainer = document.querySelector('.login-container');
+            loginContainer.classList.add('slide-in'); // Slide in effect
+        }
+    </script>
+</body>
+</html>

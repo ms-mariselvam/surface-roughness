@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460, #e94560, #f9f9f9);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 800px;
+            margin: 50px auto;
+        }
+
+        .feedback-container {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            text-align: center;
+            color: white; /* Transparent effect */
+            margin-bottom: 20px; /* Gap below heading */
+        }
+
+        /* Input styles */
+        input[type="email"],
+        textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.3);
+            color: black;
+            margin: 10px 0;
+        }
+
+        /* Center the submit button */
+        button {
+            display: block; /* Change display to block */
+            margin: 20px auto; /* Center by setting left and right margins to auto */
+            width: 80%; /* Keep your original width */
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: #5b5bff;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: box-shadow 0.3s ease;
+        }
+
+        button:hover {
+            background: #4a4acf;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Navigation styles */
+        nav {
+            position: fixed;
+            right: -100px; /* Hidden off-screen */
+            top: 0;
+            width: 80px;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.05); /* Transparent background */
+            border-radius: 20px 0 0 20px; /* Rounded corners */
+            transition: right 0.3s ease, width 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        nav:hover {
+            right: 0; /* Slide in when hovered */
+        }
+
+        nav a {
+            position: relative;
+            display: block;
+            margin: 20px 0;
+            font-size: 20px; /* Adjusted size */
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            transition: transform 0.3s ease;
+            width: 70px; /* Width increased for longer text */
+        }
+
+        nav a::before {
+            content: attr(data-icon); /* Icon */
+            font-size: 24px;
+            display: block;
+            transition: opacity 0.3s ease;
+        }
+
+        nav a::after {
+            content: attr(data-hover); /* Text */
+            font-size: 12px; /* Adjusted font size to fit */
+            opacity: 0;
+            display: block;
+            transition: opacity 0.3s ease;
+        }
+
+        nav a:hover::before {
+            opacity: 0; /* Hide icon */
+        }
+
+        nav a:hover::after {
+            opacity: 1; /* Show text */
+        }
+
+        nav a:hover {
+            transform: scale(1.1); /* Slight zoom on hover */
+        }
+
+        /* Toggle button styles */
+        .toggle-button {
+            position: fixed;
+            top: 20px;
+            right: 10px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1); /* Transparent */
+            border: none;
+            border-radius: 50%;
+            font-size: 20px;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .toggle-button:hover {
+            background: rgba(255, 255, 255, 0.4); /* Merge with navbar */
+        }
+
+        /* Hover effect: merging toggle with navbar */
+        .toggle-button:hover + nav {
+            right: 0;
+        }
+
+        /* Animation for fade-in effect */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- Toggle button -->
+    <button class="toggle-button">☰</button>
+
+    <!-- Navbar -->
+    <nav id="navbar">
+        <a href="index.html" data-icon="🏠" data-hover="Home"></a>
+        <a href="feedback.html" data-icon="🛠️" data-hover="Service"></a>
+        <a href="contact.html" data-icon="📞" data-hover="Contact"></a>
+        <a href="calibration.html" data-icon="⚙️" data-hover="Calibration"></a>
+    </nav>
+
+    <div class="container fade-in" id="fadeContainer">
+        <h1>Feedback</h1>
+        <form id="feedback-form">
+            <input type="email" id="email" name="email" placeholder="Email" required>
+            <textarea id="comments" name="comments" rows="4" placeholder="Comments" required></textarea>
+            <button type="submit">Submit Feedback</button>
+        </form>        
+    </div>
+
+    <script>
+        // Show the navbar when hovering over the toggle button
+        const toggleButton = document.querySelector('.toggle-button');
+        const nav = document.getElementById('navbar');
+
+        toggleButton.addEventListener('mouseenter', () => {
+            nav.style.right = '0';
+        });
+
+        nav.addEventListener('mouseleave', () => {
+            nav.style.right = '-100px'; // Hide the navbar on mouse leave
+        });
+
+        // Handle feedback form submission
+        const feedbackForm = document.getElementById('feedback-form');
+
+        feedbackForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const feedbackData = new FormData(feedbackForm);
+            const feedback = {};
+            feedbackData.forEach((value, key) => feedback[key] = value);
+
+            try {
+                const response = await fetch('/submitFeedback', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(feedback)
+                });
+                if (!response.ok) throw new Error('Network response was not ok');
+                feedbackForm.reset();
+                alert('Feedback submitted successfully!');
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to send feedback.');
+            }
+        });
+
+        // Add fade-in effect on page load
+        window.onload = () => {
+            const fadeContainer = document.getElementById('fadeContainer');
+            fadeContainer.classList.add('fade-in');
+        };
+    </script>
+</body>
+</html>
